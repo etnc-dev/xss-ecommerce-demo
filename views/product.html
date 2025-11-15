@@ -1,0 +1,20 @@
+<h2>{{productName}}</h2>
+<p>{{productDesc}}</p>
+<p><strong>Price: ${{productPrice}}</strong></p>
+
+<a href="/checkout" class="btn btn-success mb-3">Go to Checkout</a>
+
+<h3>Reviews</h3>
+<ul class="list-group mb-3">
+  {{reviewList}}
+</ul>
+
+<h4>Add a Review</h4>
+<form action="/product/{{productId}}/review" method="post">
+  <div class="mb-3">
+    <label for="review" class="form-label">Your Review (XSS demo allowed)</label>
+    <textarea name="review" id="review" class="form-control" rows="3"
+      placeholder='Try: &lt;script&gt;alert("Stored XSS!")&lt;/script&gt;'></textarea>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit Review</button>
+</form>

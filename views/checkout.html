@@ -1,0 +1,30 @@
+<h2>Checkout</h2>
+<p>
+  This page demonstrates <strong>DOM-based XSS</strong> using URL parameters.
+</p>
+
+<div id="checkout-message" class="alert alert-info">
+  Default message: Ready to checkout.
+</div>
+
+<p class="mt-4">
+  Try visiting this page with a <code>msg</code> query parameter:
+</p>
+<code>
+  /checkout?msg=&lt;script&gt;alert('DOM XSS!')&lt;/script&gt;
+</code>
+
+<script>
+// VULNERABLE DOM XSS: directly injects URL parameter into innerHTML
+function getParam(name) {
+  const params = new URLSearchParams(window.location.search);
+  return params.get(name);
+}
+
+const msg = getParam('msg');
+if (msg) {
+  // This is intentionally unsafe:
+  document.getElementById('checkout-message').innerHTML =
+    'Message from URL: ' + msg;
+}
+</script>

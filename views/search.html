@@ -1,0 +1,17 @@
+<h2>Search Results</h2>
+
+<p>
+  You searched for:
+  <!-- VULNERABLE: {{searchQuery}} is inserted with no escaping -->
+  <code>{{searchQuery}}</code>
+</p>
+
+<div class="mt-3">
+  {{searchResults}}
+</div>
+
+<p class="mt-4 text-muted">
+  Try a malicious link like:
+  <br>
+  <code>?q=&lt;script&gt;alert('Reflected XSS!')&lt;/script&gt;</code>
+</p>
