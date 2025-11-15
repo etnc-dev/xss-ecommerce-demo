@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MAGAYONESHUBHACKS DEMO</title>
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  >
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">XSS Shop</a>
+    <form class="d-flex" action="/search" method="get">
+      <input class="form-control me-2" type="search" name="q" placeholder="Search">
+      <button class="btn btn-outline-light" type="submit">Search</button>
+    </form>
+  </div>
+</nav>
+
+<div class="container">
+  <h2>Example Gizmo</h2>
+<p>Great for testing</p>
+<p><strong>Price: $14.99</strong></p>
+
+<a href="/checkout" class="btn btn-success mb-3">Go to Checkout</a>
+
+<h3>Reviews</h3>
+<ul class="list-group mb-3">
+  
+    <li class="list-group-item">Great product!</li>
+    <li class="list-group-item">Would buy again.</li>
+</ul>
+
+<h4>Add a Review</h4>
+<form action="/product/2/review" method="post">
+  <div class="mb-3">
+    <label for="review" class="form-label">Your Review (XSS demo allowed)</label>
+    <textarea name="review" id="review" class="form-control" rows="3"
+      placeholder='Try: &lt;script&gt;alert("Stored XSS!")&lt;/script&gt;'></textarea>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit Review</button>
+</form>
+
+</div>
+
+</body>
+</html>
