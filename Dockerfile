@@ -5,7 +5,9 @@ WORKDIR /usr/src/app
 
 # Install app dependencies
 COPY package*.json ./
-RUN npm ci --only=production
+# Use npm install instead of npm ci to avoid failures when package-lock.json
+# is missing or incompatible with the npm version in the build image.
+RUN npm install --omit=dev --no-audit --no-fund
 
 # Copy app source
 COPY . ./
