@@ -4,14 +4,19 @@ const path = require('path');
 const mysql = require('mysql2/promise');
 
 const app = express();
-const PORT = 3000;
+// Use environment variables so the app can be configured on Render or other hosts
+const PORT = process.env.PORT || 3000;
 
-// MySQL connection pool - adjust user/password if needed
+// MySQL connection pool - configured via env vars on Render or other hosts
+// Set these environment variables in your Render service: DB_HOST, DB_USER, DB_PASS, DB_NAME
 const pool = mysql.createPool({
-  host: 'localhost',
-  user: 'root',       // change if your MySQL user is different
-  password: '',       // put your MySQL password here if set
-  database: 'xss_shop'
+  host: process.env.DB_HOST || 'localhost',
+  user: process.env.DB_USER || 'root',
+  password: process.env.DB_PASS || '',
+  database: process.env.DB_NAME || 'xss_shop',
+  waitForConnections: true,
+  connectionLimit: parseInt(process.env.DB_CONN_LIMIT || '10', 10),
+  queueLimit: 0
 });
 
 app.use(bodyParser.urlencoded({ extended: false }));

@@ -1,0 +1,5 @@
+DB_HOST=your-db-host.example.com
+DB_USER=youruser
+DB_PASS=yourpassword
+DB_NAME=xss_shop
+PORT=3000
