@@ -1,22 +1,14 @@
-FROM node:18-alpine
-
-# Create app directory
+FROM node:18-alpine AS deps
 WORKDIR /usr/src/app
-
-# Install app dependencies
 COPY package*.json ./
-# Use npm install instead of npm ci to avoid failures when package-lock.json
-# is missing or incompatible with the npm version in the build image.
-RUN npm install --omit=dev --no-audit --no-fund
+# Install production dependencies using the committed lockfile for deterministic installs
+RUN npm ci --omit=dev --no-audit --no-fund
 
-# Copy app source
-COPY . ./
-
-# Expose port
+FROM node:18-alpine AS runner
+WORKDIR /usr/src/app
+COPY --from=deps /usr/src/app/node_modules ./node_modules
+COPY . .
 EXPOSE 3000
-
-# Use a non-root user for safety
 RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 USER appuser
-
 CMD [ "node", "server.js" ]
